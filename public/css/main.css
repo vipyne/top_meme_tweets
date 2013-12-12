@@ -1,0 +1,41 @@
+body {
+  background-color: white;
+  color: #222;
+  font-family: "Open Sans", sans-serif;
+  min-height: 1000px;
+}
+
+a {
+  text-decoration: none;
+  color: blue;
+}
+
+nav {
+  width: 90%;
+  margin: 0 auto;
+  height: 100px;
+}
+
+nav #brand {
+  background-image: url(/img/icon.png);
+  background-size: 100px 100px;
+  width: 100px;
+  height: 100px;
+  float: left;
+}
+
+nav h1 {
+  display: inline;
+  margin-top: 30px;
+  font-size: 2em;
+  font-weight: normal;
+  float: left;
+}
+
+
+.container {
+  padding-top: 200px;
+  width: 600px;
+  margin: 0 auto;
+  font-size: 30pt;
+}
