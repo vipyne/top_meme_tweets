@@ -13,4 +13,10 @@ $(function() {
   renderTemplate("home", undefined, function(html) {
     $(".container").html(html)  
   })
+
+  $.post('/tweets-for-meme', "meme=addawordruinamovie")
+  .done(function(resp) {
+    console.log(resp)
+  })
+
 })
