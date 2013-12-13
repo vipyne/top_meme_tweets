@@ -14,7 +14,7 @@ $(function() {
     $(".container").html(html)  
   })
 
-  $.post('/tweets-for-meme', "meme=addawordruinamovie")
+  $.post('/mock-tweets-for-meme', "meme=addawordruinamovie")
   .done(function(resp) {
     console.log(resp)
   })

@@ -43,6 +43,7 @@ app.use(express.bodyParser())
 app.use(express.logger())
 app.use(express.static(__dirname + "/public"))
 app.post('/tweets-for-meme', tweetsForMeme)
+app.post('/mock-tweets-for-meme', mockTweetsForMeme)
 
 
 function tweetsForMeme(req, res) {
@@ -63,4 +64,21 @@ function tweetsForMeme(req, res) {
       res.end(json)
     }
   })  
+}
+
+function mockTweetsForMeme(req, res) {
+  var topTweets = [
+    { id: 410854284670955500,
+      text: "The Dark Knight Light. #AddaWordRuinaMovie",
+      user: { screen_name: "jason_s_dolley" } },
+    { id: 411342778921406460,
+      text: "The Cat 'Tis Came Back #AddaWordRuinaMovie",
+      user: { screen_name: "AddAWordBot" } },
+    { id: 411343492468580350,
+      text: "#AddaWordRuinaMovie  Gone with the Wind Farm http://t.co/xCPwRKkOss",
+      user: { screen_name: "garciavet" } }
+  ]
+  var json = JSON.stringify(topTweets)
+  res.setHeader('Content-Type', 'application/json')
+  res.end(json)
 }
