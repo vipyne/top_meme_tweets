@@ -1,7 +1,8 @@
 var express    = require('express'),
     app        = express(),
     server     = require('http').createServer(app),
-    twitterAPI = require('node-twitter-api')
+    twitterAPI = require('node-twitter-api'),
+    _          = require('underscore')
 
 
 //---------- set up Twitter stuff
@@ -23,15 +24,15 @@ var
   token = process.env.TWITTER_ACCESS_TOKEN,
   secret = process.env.TWITTER_ACCESS_TOKEN_SECRET
 
-twitter.verifyCredentials(token, secret, function(error, data, response) {
-  if (error) {
-    console.log('ERROR: Invalid Twitter access token and/or access token secret.')
-    console.log(error)
-    process.exit()
-  } else {
-    console.log('SUCCESS: Twitter credentials are valid.')
-  }
-})
+// twitter.verifyCredentials(token, secret, function(error, data, response) {
+//   if (error) {
+//     console.log('ERROR: Invalid Twitter access token and/or access token secret.')
+//     console.log(error)
+//     process.exit()
+//   } else {
+//     console.log('SUCCESS: Twitter credentials are valid.')
+//   }
+// })
 
 
 //---------- start listening
@@ -39,19 +40,27 @@ var port = process.env.PORT || 8080
 console.log("Listening on port", port)
 server.listen(port)
 app.use(express.bodyParser())
+app.use(express.logger())
 app.use(express.static(__dirname + "/public"))
 app.post('/tweets-for-meme', tweetsForMeme)
 
+
 function tweetsForMeme(req, res) {
   var meme = "#" + req.body.meme
-  twitter.search({q: meme, count: 3, result_type: 'recent'}, token, secret, function(error, data, response) {
+  twitter.search({q: meme, count: 100, result_type: 'mixed'}, token, secret, function(error, data, response) {
     if (error) {
       console.log("ERROR:", error, response)
-    } else {
-      var body = JSON.stringify(data)
+      var json = JSON.stringify({ message: response })
+      res.statusCode = 500
       res.setHeader('Content-Type', 'application/json')
-      res.setHeader('Content-Length', body.length)
-      res.end(body)
+      res.end(json)
+    } else {
+      var topTenTweets = _.sortBy(data.statuses, function(status) {
+        return status.retweet_count
+      }).reverse().slice(0, 10)
+      var json = JSON.stringify(topTenTweets)
+      res.setHeader('Content-Type', 'application/json')
+      res.end(json)
     }
-  })
+  })  
 }
