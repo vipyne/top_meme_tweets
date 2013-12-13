@@ -21,7 +21,8 @@
     </nav>
 
     <div class="container">
-      <form action="/tweets-for-meme">
+      <!-- use action="/mock-tweets-for-meme" when testing to avoid Twitter rate limiting -->
+      <form action="/tweets-for-meme"> 
         <label for="meme"></label>
         <input type="text" name="meme" placeholder="e.g., AddAWordRuinAMovie">
         <button type="submit">Get Tweets</button>
