@@ -69,13 +69,19 @@ function tweetsForMeme(req, res) {
 function mockTweetsForMeme(req, res) {
   var topTweets = [
     { id: 410854284670955500,
+      id_str: "410854284670955520",
       text: "The Dark Knight Light. #AddaWordRuinaMovie",
+      retweet_count: 26,
       user: { screen_name: "jason_s_dolley" } },
     { id: 411342778921406460,
+      id_str: "411361322493042688",
       text: "The Cat 'Tis Came Back #AddaWordRuinaMovie",
+      retweet_count: 0,
       user: { screen_name: "AddAWordBot" } },
     { id: 411343492468580350,
+      id_str: "411361876015329280",
       text: "#AddaWordRuinaMovie  Gone with the Wind Farm http://t.co/xCPwRKkOss",
+      retweet_count: 0,
       user: { screen_name: "garciavet" } }
   ]
   var json = JSON.stringify(topTweets)
