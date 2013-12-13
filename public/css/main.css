@@ -32,10 +32,29 @@ nav h1 {
   float: left;
 }
 
+input[type='text'] {
+  font-size: 1.25em;
+  width: 55%;
+}
+
+button {
+  font-size: 1.25em;
+  padding: 0.25em;
+}
 
 .container {
-  padding-top: 200px;
-  width: 600px;
+  width: 800px;
   margin: 0 auto;
-  font-size: 30pt;
+}
+
+.tweets {
+  margin-top: 2em;
+}
+
+.screen-name {
+  font-weight: bold;
+}
+
+.popularity {
+  font-style: italic;
 }
