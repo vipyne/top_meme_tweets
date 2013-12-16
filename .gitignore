@@ -1,3 +1,5 @@
 node_modules/*
 
 twitter-env.sh
+
+twitter_keys.js
