@@ -51,15 +51,18 @@ var Controller = {
   },
 
   showTweetsForMeme: function(e) {
+    // 'this' is the event target!
+    console.log('showTweetsForMeme this', this)
     e.preventDefault()
     $(".container .tweets").html('')
     var $form = $(event.target)
-    $.post($form.attr('action'), $form.serialize(), this.renderTweets.bind(this))
+    $.post($form.attr('action'), $form.serialize(), Controller.renderTweets.bind(this))
   },
 
   renderTweets: function(tweets) {
     for (var i in tweets) {
-      TEMPLATES.render('tweet', tweets[i], this.appendTweet)
+      console.log('rendertweets this', this)
+      TEMPLATES.render('tweet', tweets[i], Controller.appendTweet('<p>test tweet</p>'))
     }
   },
 
