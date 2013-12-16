@@ -2,18 +2,17 @@ var TEMPLATES = (function() {
   var _cache = {}
 
   function _tUrl(name) {
-    console.log('got to turl')
+    console.log("templates:: /templates/" + name + ".hbs")
     return "/templates/" + name + ".hbs"
   }
 
   return {
     precompile: function(names) {
-      console.log('got to precompile')
       for (var i in names) {
-        console.log('return precompile:', this)
         var self = this
         $.get(_tUrl(names[i]), function(source) {
-          console.log('get request inside precomple:', this)
+          console.log('names[i]', names[i])
+          console.log('source:', source)
           self.compileAndCache(names[i], source)
         })
       }
@@ -22,23 +21,33 @@ var TEMPLATES = (function() {
     compileAndCache: function(name, source) {
       var template = Handlebars.compile(source)
       _cache[name] = template
+      // console.log('template::', template)
       return template
     },
 
     render: function(name, context, renderCallback) {
       var self = this
       console.log('render this:', this)
-      function compileCacheAndRender(source) {
-        template = self.compileAndCache(name, source)
-        renderCallback(template(context))
-      }
-
       var template = _cache[name]
       if (template) {
+        console.log('ka')
+        console.log(template(context))
+        console.log('context:', context)
+        console.log('name:', name)
+        console.log('_cache:', _cache)
+        console.log(_cache['tweet'])
+        console.log(template)
         renderCallback(template(context))
       } else {
-        $.get(_tUrl(name, compileCacheAndRender))
+        console.log('boom')
+        // $.get(_tUrl(name, Controller.compileCacheAndRender("<source>")))
       }
+    },
+
+    compileCacheAndRender: function(source) {
+      template = self.compileAndCache(name, source)
+      console.log('inside function template', template)
+      renderCallback(template(context))
     }
   }
 })()
@@ -47,6 +56,7 @@ var Controller = {
   init: function() {
     console.log('got to controller init')
     TEMPLATES.precompile(['tweet'])
+    console.log('tweet template?', ['tweet'])
     $('form').on('submit', this.showTweetsForMeme)
   },
 
@@ -56,13 +66,13 @@ var Controller = {
     e.preventDefault()
     $(".container .tweets").html('')
     var $form = $(event.target)
-    $.post($form.attr('action'), $form.serialize(), Controller.renderTweets.bind(this))
+    $.post($form.attr('action'), $form.serialize(), Controller.renderTweets.bind(Controller))
   },
 
   renderTweets: function(tweets) {
     for (var i in tweets) {
       console.log('rendertweets this', this)
-      TEMPLATES.render('tweet', tweets[i], Controller.appendTweet('<p>test tweet</p>'))
+      TEMPLATES.render('tweet', tweets[i], Controller.appendTweet)
     }
   },
 
