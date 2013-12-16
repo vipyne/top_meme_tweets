@@ -2,6 +2,7 @@ var TEMPLATES = (function() {
   var _cache = {}
 
   function _tUrl(name) {
+    console.log('got to turl')
     return "/templates/" + name + ".hbs"
   }
 
@@ -20,25 +21,27 @@ var TEMPLATES = (function() {
       return template
     },
 
-    render: function(name, context, renderCallback) {
-      var self = this
-      function compileCacheAndRender(source) {
-        template = self.compileAndCache(name, source)
-        renderCallback(template(context))
-      }
+    // render: function(name, context, renderCallback) {
+    //   var self = this
+    //   console.log('render this:', this)
+    //   function compileCacheAndRender(source) {
+    //     template = self.compileAndCache(name, source)
+    //     renderCallback(template(context))
+    //   }
 
-      var template = _cache[name]
-      if (template) {
-        renderCallback(template(context))
-      } else {
-        $.get(_tUrl(name, compileCacheAndRender)
-      }
-    }
+    //   var template = _cache[name]
+    //   if (template) {
+    //     renderCallback(template(context))
+    //   } else {
+    //     $.get(_tUrl(name, compileCacheAndRender)
+    //   }
+    // }
   }
-}())
+})()
 
 var Controller = {
   init: function() {
+    console.log('got to controller init')
     TEMPLATES.precompile(['tweet'])
     $('form').on('submit', this.showTweetsForMeme)
   },
@@ -53,7 +56,7 @@ var Controller = {
   renderTweets: function(tweets) {
     for (var i in tweets) {
       TEMPLATES.render('tweet', tweets[i], this.appendTweet)
-    }}
+    }
   },
 
   appendTweet: function(html) {
