@@ -8,9 +8,13 @@ var TEMPLATES = (function() {
 
   return {
     precompile: function(names) {
+      console.log('got to precompile')
       for (var i in names) {
+        console.log('return precompile:', this)
+        var self = this
         $.get(_tUrl(names[i]), function(source) {
-          this.compileAndCache(names[i], source)
+          console.log('get request inside precomple:', this)
+          self.compileAndCache(names[i], source)
         })
       }
     },
@@ -21,21 +25,21 @@ var TEMPLATES = (function() {
       return template
     },
 
-    // render: function(name, context, renderCallback) {
-    //   var self = this
-    //   console.log('render this:', this)
-    //   function compileCacheAndRender(source) {
-    //     template = self.compileAndCache(name, source)
-    //     renderCallback(template(context))
-    //   }
+    render: function(name, context, renderCallback) {
+      var self = this
+      console.log('render this:', this)
+      function compileCacheAndRender(source) {
+        template = self.compileAndCache(name, source)
+        renderCallback(template(context))
+      }
 
-    //   var template = _cache[name]
-    //   if (template) {
-    //     renderCallback(template(context))
-    //   } else {
-    //     $.get(_tUrl(name, compileCacheAndRender)
-    //   }
-    // }
+      var template = _cache[name]
+      if (template) {
+        renderCallback(template(context))
+      } else {
+        $.get(_tUrl(name, compileCacheAndRender))
+      }
+    }
   }
 })()
 
