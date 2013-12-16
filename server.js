@@ -4,6 +4,10 @@ var express    = require('express'),
     twitterAPI = require('node-twitter-api'),
     _          = require('underscore')
 
+// export TWITTER_CONSUMER_KEY=pZGxFfsgY6sbdcjvq4gdjg
+// export TWITTER_CONSUMER_SECRET=8TgBB9Ngl5GdsvtHRR88NMdOGHyiSt0mMrrxsfy1x8
+// export TWITTER_ACCESS_TOKEN=140140984-mwqJL3aeFbfsvouFH54ek41Gpt6gsjb5p1NvoyHb
+// export TWITTER_ACCESS_TOKEN_SECRET=zavzOrII9wswzJicl67weWWa0Xzw4IxX8BKOP67avTwXv
 
 //---------- set up Twitter stuff
 if (!process.env.TWITTER_CONSUMER_KEY ||
@@ -63,7 +67,7 @@ function tweetsForMeme(req, res) {
       res.setHeader('Content-Type', 'application/json')
       res.end(json)
     }
-  })  
+  })
 }
 
 function mockTweetsForMeme(req, res) {
