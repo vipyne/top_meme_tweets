@@ -44,7 +44,14 @@ var Controller = {
     $('form').on('submit', this.showTweetsForMeme)
   },
 
+function ObjY(a,b,c) {
+  ObjX.call(this, a, b * 12);
+  this.$c = c;
+}
+blah.call(this, 1, 2, 3)
+
   showTweetsForMeme: function(e) {
+    debugger
     e.preventDefault()
     $(".container .tweets").html('')
     var $form = $(event.target)
