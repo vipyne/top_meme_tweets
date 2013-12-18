@@ -41,21 +41,15 @@ var TEMPLATES = (function() {
 var Controller = {
   init: function() {
     TEMPLATES.precompile(['tweet'])
-    $('form').on('submit', this.showTweetsForMeme)
+    $('form').on('submit', this.showTweetsForMeme.bind(this))
   },
 
-function ObjY(a,b,c) {
-  ObjX.call(this, a, b * 12);
-  this.$c = c;
-}
-blah.call(this, 1, 2, 3)
 
   showTweetsForMeme: function(e) {
-    debugger
     e.preventDefault()
     $(".container .tweets").html('')
     var $form = $(event.target)
-    $.post($form.attr('action'), $form.serialize(), Controller.renderTweets.bind(Controller))
+    $.post($form.attr('action'), $form.serialize(), this.renderTweets.bind(this))
   },
 
   renderTweets: function(tweets) {
@@ -70,5 +64,8 @@ blah.call(this, 1, 2, 3)
 }
 
 $(function() {
-  Controller.init()
+
+  var JeffreyController = new Object(Controller)
+
+  JeffreyController.init()
 })
